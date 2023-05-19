@@ -1,21 +1,33 @@
-import DataExtraction
+from DataExtraction import DataExtraction
+from DataStorage import DataStorage
 
 class PriceComparison():
     
     def compareCurrentPriceMaximumPrice(self, name):
+        # Achar a URL com o nome do produto
+        data = DataStorage()
+        url = data.getUrl(name)
+
         # Preço Atual
-        url = '' # Onde o ProductManagement guardar a url, eu vou buscar com o nome do produto a sua url
-        currentPrice = DataExtraction.DataExtraction.extractRelevantData(url)
+        dataExtraction = DataExtraction()
+        currentPriceList = dataExtraction.extractRelevantData(url)
+        currentPrice = currentPriceList[0]
 
         # Preço Máximo
-        maximumPrice = '' # Onde o ProductManagement guardar o preço máximo, eu vou buscar com o nome do produto o seu preço máximo
+        desiredPrice = data.getPrice(name)
 
         # Converter ambos para Float
         currentPrice = float(currentPrice)
-        maximumPrice = float(maximumPrice)
+        desiredPrice = float(desiredPrice)
+
+        List = []
 
         # Resultado
-        if currentPrice > maximumPrice:
-            return False
+        if currentPrice > desiredPrice:
+            List.append(False)
+            return List
         else:
-            return True
+            List.append(True)
+            total = desiredPrice - currentPrice
+            List.append(total)
+            return List

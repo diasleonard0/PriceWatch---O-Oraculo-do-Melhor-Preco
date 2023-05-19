@@ -34,7 +34,4 @@ class DataExtraction():
         relevantData.append(price)
         relevantData.append(availability)
 
-        print(price)
-        print(availability)
-
         return relevantData
